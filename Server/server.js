@@ -1,23 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 
 
+
+
 const app = express();
+
+//Body parser
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 //mongodb
 const dbURI = require('./config/keys').mongoURI;
-mongoose.connect(dbURI)
+mongoose.connect(dbURI,{ useNewUrlParser: true })
   .then(()=> console.log('Connected to mongoDB'))
   .catch(err => console.log('err'));
 
-
-app.get('/', (req,res) => {
-  res.send('I just came to say hello');
-});
+// Passport middleware
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 //routes
 app.use('/api/users',users);
