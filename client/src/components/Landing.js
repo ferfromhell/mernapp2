@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Grid, Segment, Image, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-
+import { PropTypes} from 'prop-types';
+import { connect } from 'react-redux';
 
 const  styles = {
   grid:{
@@ -13,6 +14,11 @@ const  styles = {
 }
 
  class Landing extends Component {
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
   render() {
     return (
       <div style={{minHeight:"600px"}}>
@@ -41,5 +47,11 @@ const  styles = {
     )
   }
 }
+Landing.propTypes ={
+  auth: PropTypes.object.isRequired
+}
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 
-export default Landing
+export default connect(mapStateToProps)(Landing)
