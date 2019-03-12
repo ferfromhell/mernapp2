@@ -48,12 +48,32 @@ router.post('/', passport.authenticate('jwt', { session: false }),(req, res) => 
 
     const newPost = new Post({
       text: req.body.text,
+      tittle: req.body.tittle,
       name: req.body.name,
       avatar: req.body.avatar,
       user: req.user.id
     });
 
     newPost.save().then(post => res.json(post));
+  }
+);
+
+router.delete('/:id',passport.authenticate('jwt', { session: false }),(req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          // Check for post owner
+          if (post.user.toString() !== req.user.id) {
+            return res
+              .status(401)
+              .json({ notauthorized: 'User not authorized' });
+          }
+
+          // Delete
+          post.remove().then(() => res.json({ success: true }));
+        })
+        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+    });
   }
 );
 

@@ -39,8 +39,11 @@ export const setCurrentUser = decoded => {
   };
 };
 
-export const logoutUser = () =>  dispatch =>{
+export const logoutUser = () => dispatch => {
+  // Remove token from localStorage
   localStorage.removeItem('tokenbbs');
+  // Remove auth header for future requests
   setAuthToken(false);
-  dispatch(setCurrentUser({}))
-}
+  // Set current user to {} which will set isAuthenticated to false
+  dispatch(setCurrentUser({}));
+};

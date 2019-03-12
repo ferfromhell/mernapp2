@@ -9,13 +9,23 @@ import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 
+import PrivateRoute from './components/utils/PrivateRoute';
 import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Register from './components/Register';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import CreateProfile from './components/profile/Create';
+import ManageProfile from './components/profile/Manage';
+import Profiles from './components/profile/Profiles';
+import Profile from './components/profile/Profile';
+import Posts from './components/posts/Posts';
+import SinglePost from './components/posts/SinglePost';
 
 import store from './store';
+import { clearCurrentProfile } from './actions/profileActions';
+
 
 if(localStorage.tokenbbs){
   setAuthToken(localStorage.tokenbbs);
@@ -25,6 +35,7 @@ if(localStorage.tokenbbs){
   const currentTime = Date.now() / 1000;
   if(decodeURI.exp < currentTime){
     store.dispatch(logoutUser());
+    store.dispatch(clearCurrentProfile());
     //Clear profile
     window.location.href = '/login';
   }
@@ -41,6 +52,13 @@ class App extends Component {
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/createProfile" component={CreateProfile} />
+                <PrivateRoute exact path="/manageProfile" component={ManageProfile} />
+                <Route exact path="/profiles" component={Profiles} />
+                <PrivateRoute exact path="/profile/:handle" component={Profile} />
+                <PrivateRoute exact path="/posts" component={Posts} />
+                <PrivateRoute exact path="/post/:id" component={SinglePost} />
               </Switch>
             {/* <Footer/> */}
           </div>

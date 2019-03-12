@@ -1,6 +1,8 @@
 /node_modules
 package-lock.json
-/Server/node_modules
-/Server/package-lock.json
+/apiServer/node_modules
+/apiServer/package-lock.json
+/authServer/node_modules
+/authServer/package-lock.json
 /client/node_modules
 /client/package-lock.json

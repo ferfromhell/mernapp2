@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "apiserver",
   "version": "1.0.0",
   "description": "MERN app server",
   "main": "index.js",

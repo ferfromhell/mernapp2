@@ -82,6 +82,7 @@ router.get('/user/:user_id', (req, res) => {
 
 //Create profile
 router.post('/', passport.authenticate('jwt', { session: false }), (req,res) => {
+  // console.log(req.body);
   const {errors, isValid} = validateProfileInput(req.body);
   if(!isValid) return res.status(400).json(errors);
 
@@ -91,7 +92,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req,res) => 
   if(req.body.company) profileFields.company = req.body.company;
   if(req.body.website) profileFields.website = req.body.website;
   if(req.body.location) profileFields.location = req.body.location;
-  if(req.body.status) profileFields.status = req.body.status;
+  // if(req.body.status) profileFields.status = req.body.status;
+  // if(req.body.bio) profileFields.status = req.body.bio;
   
   if(typeof req.body.skills !== 'undefined'){
     profileFields.skills = req.body.skills.split(',');
@@ -99,7 +101,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req,res) => 
 
   // if(req.body.skills) profileFields.skills = req.body.skills;
   if(req.body.bio) profileFields.bio = req.body.bio;
-  if(req.body.status) profileFields.status = req.body.status;
+  // if(req.body.status) profileFields.status = req.body.status;
 
   Profile.findOne({ user: req.user.id })
   .then(profile => {

@@ -12,7 +12,7 @@ const validateLoginInput = require('../../validation/login');
 
 router.get('/', (req,res) => {
   res.json({
-    msg: "USers"
+    msg: "Users"
   })
 });
 
