@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 const passport = require('passport');
 
 const users = require('./routes/api/users');
@@ -22,6 +23,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use(cookieParser());
 //mongodb
 const dbURI = require('./config/keys').mongoURI;
 mongoose.connect(dbURI,{ useNewUrlParser: true })
@@ -40,5 +42,5 @@ app.use('/api/posts',posts);
 const port = process.env.PORT || 4444;
 
 app.listen(port, ()=>{
-  console.log(`Server running in port ${port}`);
+  console.log(`APIServer running in port ${port}`);
 });

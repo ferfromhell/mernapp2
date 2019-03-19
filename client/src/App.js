@@ -4,11 +4,14 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import {setCurrentUser, logoutUser} from './actions/authActions';
 import { Provider } from 'react-redux';
+import * as io from 'socket.io-client'
+
 // import { createStore,applyMiddleware } from 'redux';
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 
+import SocketContext from './socketContext';
 import PrivateRoute from './components/utils/PrivateRoute';
 import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
@@ -22,6 +25,7 @@ import Profiles from './components/profile/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import SinglePost from './components/posts/SinglePost';
+import Chat from './components/chatroom/Chat';
 
 import store from './store';
 import { clearCurrentProfile } from './actions/profileActions';
@@ -41,10 +45,20 @@ if(localStorage.tokenbbs){
   }
 }
 
+const socket = io(process.env.REACT_APP_API_BASE_URL, {
+  secure: true,
+  rejectUnauthorized: false,
+  path: '/io',
+  extraHeaders: {
+    tokennbss: localStorage.getItem('tokenbbs')
+  }
+})
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
+      <SocketContext.Provider value={socket}>
         <Router>
           <div className="App">
             <Navbar/>
@@ -59,10 +73,12 @@ class App extends Component {
                 <PrivateRoute exact path="/profile/:handle" component={Profile} />
                 <PrivateRoute exact path="/posts" component={Posts} />
                 <PrivateRoute exact path="/post/:id" component={SinglePost} />
+                <PrivateRoute exact path="/chat" component={Chat} />
               </Switch>
             {/* <Footer/> */}
           </div>
         </Router>
+      </SocketContext.Provider>
       </Provider>
     );
   }

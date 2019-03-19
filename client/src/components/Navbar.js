@@ -76,9 +76,11 @@ class Navbar extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='channels'
-            active={activeItem === 'channels'}
-            content='Channels'
+            as={ Link }
+            to='/chat'
+            name='chat'
+            active={activeItem === 'chat'}
+            content='ChatRoom'
             onClick={this.handleItemClick}
           />
           {isAuthenticated ? authLinks:guestLinks}

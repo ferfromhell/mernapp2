@@ -1,0 +1,38 @@
+version: "2"
+services:
+  mongodb:
+    image: "mongo"
+    ports:
+     - "27017:27017"
+  authserver:
+    build: ./authServer/
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./authServer:/usr/src/app
+    depends_on:
+      - mongodb
+  # apiserver:
+  #   build: ./apiServer/
+  #   ports:
+  #     - "4444:4444"
+  #   volumes:
+  #     - ./apiServer:/usr/src/app
+  #   depends_on:
+  #     - mongodb
+  # socketserver:
+  #   build: ./socketServer/
+  #   ports:
+  #     - "3456:3456"
+  #   volumes:
+  #     - ./socketServer:/usr/src/app
+  #   depends_on:
+  #     - authserver
+  # client:
+  #   build: ./client/
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./client:/usr/src/app
+  #   depends_on:
+  #     - authserver

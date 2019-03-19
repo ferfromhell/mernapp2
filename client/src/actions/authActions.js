@@ -24,6 +24,7 @@ export const loginUser = (args) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
+      
     })
     .catch(err => 
       dispatch({

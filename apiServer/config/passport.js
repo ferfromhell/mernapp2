@@ -5,11 +5,21 @@ const User = mongoose.model('users');
 const keys = require('../config/keys');
 
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+const coockieExtractor = (req)=>{
+  let token = null;
+  if(req && req.cookies){
+    token = req.cookies['cokkiebbs'];
+    console.log(`token: ${token}`);
+  }
+  return token;
+}
+// opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = coockieExtractor;
 opts.secretOrKey = keys.secretJWT;
 
 module.exports = passport => {
   passport.use(new JwtStrategy(opts, (jwt_payload, done)=> {
+    // console.log(jwt_payload);
     User.findById(jwt_payload.id)
     .then(user => {
       if(user){

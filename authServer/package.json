@@ -1,18 +1,27 @@
 {
-  "name": "authServer",
+  "name": "authserver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Fernando Lujan",
+  "repository": "https://github.com/ferfromhell/mernapp2/",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "gravatar": "^1.8.0",
     "mongoose": "^5.4.19",
-    "passport": "^0.4.0"
+    "node-pre-gyp": "^0.12.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }

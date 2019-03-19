@@ -3,11 +3,16 @@ import { Message, Grid, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import SocketContext from '../socketContext';
 import { getCurrentProfile } from '../actions/profileActions';
 // import ProfileActions from './profile/Manage';
 
 import Loading from './Loading';
+import OnlineUser from './utils/OnlineUser';
+import RecentActivity from './utils/RecentActivity';
 import { Button } from 'semantic-ui-react';
+
+
 
 
 class Dashboard extends Component {
@@ -58,12 +63,17 @@ class Dashboard extends Component {
         <Grid columns={2}>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Segment>
-              {dashboardContent}
-              </Segment>
+              <Grid.Row>
+                <Segment>
+                  {dashboardContent}
+                </Segment>
+              </Grid.Row>
+              <Grid.Row>
+                <RecentActivity/>
+              </Grid.Row>
             </Grid.Column>
             <Grid.Column width={13}>
-              <Segment>Post will go here</Segment>
+              <OnlineUser/>
             </Grid.Column>
           </Grid.Row>
       </Grid>
@@ -72,6 +82,13 @@ class Dashboard extends Component {
     )
   }
 }
+
+const DashboardWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <Dashboard {...props} socket={socket} />}
+  </SocketContext.Consumer>
+)
+
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -84,5 +101,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { getCurrentProfile })(
-  Dashboard
+  DashboardWithSocket
 );

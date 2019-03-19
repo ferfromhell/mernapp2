@@ -14,3 +14,15 @@ export const GET_POST = "GET_POST";
 export const ADD_POST = "ADD_POST";
 export const ADD_DRAW = "ADD_DRAW";
 export const DELETE_POST = 'DELETE_POST';
+
+//chatTypes
+export const ADD_MESSAGE = "ADD_MESSAGE";
+export const MESSAGE_RECEIVED = "MESSAGE_RECEIVED";
+export const ADD_USER = "ADD_USER";
+export const USER_LIST = "USER_LIST";
+
+//Noti Types
+
+export const USER_LOGGED = "USER_LOGGED"
+export const ONLINE_TEST = "ONLINE_TEST"
+export const RECENT_ACTIVITY = "RECENT_ACTIVITY"
