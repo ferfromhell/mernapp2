@@ -1,38 +1,50 @@
 version: "2"
 services:
-  mongodb:
-    image: "mongo"
+  client:
+    build: ./client/
+    # image: react-nginx
     ports:
-     - "27017:27017"
+      - "3000:80"
+    volumes:
+      # - ./client:/app
+      - ./client/public:/srv/www/static
+    depends_on:
+      - authserver
   authserver:
     build: ./authServer/
     ports:
       - "5555:5555"
     volumes:
-      - ./authServer:/usr/src/app
+      - ./authServer:/app
     depends_on:
       - mongodb
+  mongodb:
+    image: "mongo"
+    ports:
+     - "27017:27017"
   # apiserver:
   #   build: ./apiServer/
   #   ports:
   #     - "4444:4444"
   #   volumes:
-  #     - ./apiServer:/usr/src/app
+  #     - ./apiServer:/app
   #   depends_on:
   #     - mongodb
-  # socketserver:
-  #   build: ./socketServer/
+  socketserver:
+    build: ./socketServer/
+    ports:
+      - "3456:3456"
+    volumes:
+      - ./socketServer:/app
+    depends_on:
+      - authserver
+  # nginx:
+  #   image: nginx:alpine
   #   ports:
-  #     - "3456:3456"
+  #     - "8000:8080"
   #   volumes:
-  #     - ./socketServer:/usr/src/app
+  #     - ./client/public:/srv/www/static
+  # #     - ./proxy.conf:/etc/nginx/conf.d/default.conf
   #   depends_on:
-  #     - authserver
-  # client:
-  #   build: ./client/
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./client:/usr/src/app
-  #   depends_on:
+  #     - client
   #     - authserver

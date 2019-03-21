@@ -1,8 +1,8 @@
-FROM node:8.12.0
+FROM node:latest
 
 WORKDIR /app
-COPY package.json .
+COPY package*.json ./
 RUN npm install
-COPY . .
+COPY . ./
 CMD node server.js
-EXPOSE 8081
+EXPOSE 5555

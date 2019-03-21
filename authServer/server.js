@@ -23,7 +23,7 @@ app.use(cookieParser());
 const dbURI = require('./config/keys').mongoURI;
 mongoose.connect(dbURI,{ useNewUrlParser: true })
   .then(()=> console.log('Connected to mongoDB'))
-  .catch(err => console.log('err'));
+  .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());

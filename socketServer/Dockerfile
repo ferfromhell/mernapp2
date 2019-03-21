@@ -1,8 +1,9 @@
-FROM node:8.12.0
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+FROM node:latest
 
-RUN npm install -g nodemon
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . ./
 
-EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD node server.js
+EXPOSE 3456

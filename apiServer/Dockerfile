@@ -1,10 +1,8 @@
 FROM node:8.12.0
 
-RUN npm install -g nodemon
-
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-
-EXPOSE 3000
-CMD [ "npm", "start" ]
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+CMD node server.js
+EXPOSE 4444
