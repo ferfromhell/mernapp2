@@ -13,7 +13,7 @@ RUN npm run build
 # # # Stage 2 ngnix proxy configuration
 FROM nginx:alpine
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
-COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
@@ -33,4 +33,5 @@ CMD ["nginx", "-g", "daemon off;"]
 # # RUN rm /etc/nginx/conf.d/*
 # COPY proxy.conf /etc/nginx.conf.d/
 # WORKDIR /srv/www/static
+
 # COPY ./build .

@@ -42,7 +42,7 @@ io.on('connection', socket => {
     // console.log('user disconnected', socket.handshake.headers.cookie);
     const url="/api/users/current";
     await axios({
-          url: 'http://localhost:5555/api/users/current',
+          url: '/api/users/current',
           method: 'get',
           headers: {
             Cookie: socket.handshake.headers.cookie

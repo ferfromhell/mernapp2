@@ -9,11 +9,13 @@ export const registerUser = (args, history) =>(dispatch) =>{
     .then(res => {
       history.push('/login');
     })
-    .catch(err => 
+    .catch(err =>{
+      console.log('err register: ',err); 
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      }) 
+      })
+    } 
     );
 };
 export const loginUser = (args) => (dispatch) => {

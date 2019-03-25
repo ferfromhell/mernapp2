@@ -4,11 +4,13 @@ services:
     build: ./client/
     # image: react-nginx
     ports:
-      - "3000:80"
+      - "8080:80"
     volumes:
       # - ./client:/app
       - ./client/public:/srv/www/static
     depends_on:
+      - authserver
+    links:
       - authserver
   authserver:
     build: ./authServer/
@@ -22,14 +24,14 @@ services:
     image: "mongo"
     ports:
      - "27017:27017"
-  # apiserver:
-  #   build: ./apiServer/
-  #   ports:
-  #     - "4444:4444"
-  #   volumes:
-  #     - ./apiServer:/app
-  #   depends_on:
-  #     - mongodb
+  apiserver:
+    build: ./apiServer/
+    ports:
+      - "4444:4444"
+    volumes:
+      - ./apiServer:/app
+    depends_on:
+      - mongodb
   socketserver:
     build: ./socketServer/
     ports:
